@@ -1,9 +1,8 @@
 fileFormatVersion: 2
-guid: 1d794a390d7ca274084c1f150fde37c1
+guid: e5b012ef3f90419448f674c176ee8a51
 TextureImporter:
   fileIDToRecycleName:
-    21300000: wheel
-    21300002: Wheel
+    21300000: MagentaTile
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,10 +25,10 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
-    filterMode: 0
-    aniso: 1
+    filterMode: -1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

@@ -4,16 +4,24 @@ namespace Assets.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        private Vector3 _velocity;
+        // State.
+
+        private PlayerInput _player_input;
+        private Vector2 _velocity;
+
+
+        // Public interface.
 
         public void Start ()
         {
-            _velocity = new Vector3(0, 0, 0);
+            _player_input = GetComponent<PlayerInput>();
+            _velocity = new Vector2(0, 0);
         }
 
-        public void Update ()
+        public void Update()
         {
-            transform.position += _velocity;
+            _velocity = _player_input.GetMovementInput() * Time.deltaTime;
+            transform.position += new Vector3(_velocity.x, _velocity.y, 0);
         }
     }
 }

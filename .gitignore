@@ -3,3 +3,4 @@ Temp/
 *.sln
 *.suo
 *.userprefs
+obj/

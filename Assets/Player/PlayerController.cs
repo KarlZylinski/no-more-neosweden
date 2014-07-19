@@ -46,7 +46,6 @@ namespace Assets.Player
             _horizontal_velocity = CalculateHorizontalVelocity(_horizontal_velocity, input.x, MaxHorizontalVelocity, HorizontalAcceleration);
             rigidbody2D.velocity = new Vector2(_horizontal_velocity, CalculateVerticalVelocity(rigidbody2D.velocity.y, transform.position, _collider, GroundLayerMask));
             _on_ground = ApplyJump( _input.GetJump(), _on_ground, rigidbody2D, JumpForce);
-            Debug.Log(_on_ground);
         }
 
 

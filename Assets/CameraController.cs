@@ -6,7 +6,7 @@ namespace Assets
     public class CameraController : MonoBehaviour
     {
         // State.
-        public GameObject Player;
+        private GameObject _player;
         private PlayerController _player_controller;
         private Camera _camera;
 
@@ -16,12 +16,13 @@ namespace Assets
         public void Start ()
         {
             _camera = GetComponent<Camera>();
-            _player_controller = Player.GetComponent<PlayerController>();
+            _player = GameObject.FindWithTag("Player");
+            _player_controller = _player.GetComponent<PlayerController>();
         }
 
         public void Update ()
         {
-            SetCameraPosition(_camera, Player.transform.position, _player_controller.Facing);
+            SetCameraPosition(_camera, _player.transform.position, _player_controller.Facing);
         }
 
 

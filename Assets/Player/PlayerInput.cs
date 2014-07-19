@@ -9,11 +9,8 @@ namespace Assets.Player
 
         private const string MovementAxisX = "MoveX";
         private const string MovementAxisY = "MoveY";
-        private const string AttackAxisX = "AttackX";
-        private const string AttackAxisY = "AttackY";
         private const string JumpAxis = "Jump";
         private Vector2 _movement_input;
-        private Vector2 _attack_input;
         private bool _jump;
 
 
@@ -22,14 +19,12 @@ namespace Assets.Player
         public void Start()
         {
             _movement_input = new Vector2(0, 0);
-            _attack_input = new Vector2(0, 0);
             _jump = false;
         }
 
         public void Update()
         {
             _movement_input = CalculateVelocity(_movement_input, ReadInput(MovementAxisX, MovementAxisY));
-            _attack_input = CalculateVelocity(_movement_input, ReadInput(AttackAxisX, AttackAxisY));
 
             var jump_button_down = Math.Abs(Input.GetAxis(JumpAxis)) > 0.2f;
 
@@ -42,11 +37,6 @@ namespace Assets.Player
         public Vector2 GetMovementInput()
         {
             return _movement_input;
-        }
-
-        public Vector2 GetAttackInput()
-        {
-            return _attack_input;
         }
 
         public bool GetJump()

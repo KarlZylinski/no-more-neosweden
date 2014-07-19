@@ -83,7 +83,7 @@ namespace Assets
 
             while (current_near_bg_x_pos < Stage.width*0.16f)
             {
-                Instantiate(NearBackground, new Vector3(current_near_bg_x_pos, 1.3f), Quaternion.identity);
+                Instantiate(NearBackground, new Vector3(current_near_bg_x_pos, 1.2f, 1), Quaternion.identity);
                 current_near_bg_x_pos += near_bg_width;
             }
 
@@ -92,7 +92,7 @@ namespace Assets
 
             while (current_far_bg_x_pos < Stage.width * 0.16f)
             {
-                Instantiate(FarBackground, new Vector3(current_far_bg_x_pos, 1.5f), Quaternion.identity);
+                Instantiate(FarBackground, new Vector3(current_far_bg_x_pos, 1.2f, 3), Quaternion.identity);
                 current_far_bg_x_pos += far_bg_width;
             }
         }

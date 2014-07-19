@@ -29,16 +29,21 @@ namespace Assets.Player
         {
             _on_ground = IsOnGround(transform.position, _collider, GroundLayerMask);
             rigidbody2D.velocity = CalculateVelocity(rigidbody2D.velocity, _input.GetMovementInput(), MaxHorizontalVelocity, HorizontalAcceleration, _on_ground);
-            ApplyJump( _input.GetJump(), _on_ground, rigidbody2D, JumpForce);
+            _on_ground = ApplyJump( _input.GetJump(), _on_ground, rigidbody2D, JumpForce);
         }
 
 
         // Implementation.
 
-        private static void ApplyJump(bool jump_key_pressed, bool on_ground, Rigidbody2D rigidbody, float jump_force)
+        private static bool ApplyJump(bool jump_key_pressed, bool on_ground, Rigidbody2D rigidbody, float jump_force)
         {
             if (jump_key_pressed && on_ground)
+            {
                 rigidbody.AddForce(new Vector2(0, jump_force));
+                return true;
+            }
+
+            return on_ground;
         }
 
         private static Vector2 CalculateVelocity(Vector2 current_velocity, Vector2 movement_input, float max_horizontal_velocity, float horizontal_acceleration, bool on_ground)

@@ -54,13 +54,13 @@ namespace Assets
                     else if (p.Equals(ground_pixel))
                         SpawnEndPieceOrNormal(x, y, ground_pixel, AirTiles, AirTileEnd, r, Stage);
                     else if (p == yellow_pixel)
-                        Spawn(YellowTile, x, y);
+                        Spawn(YellowTile, x, y, false, -0.06f);
                     else if (p == blue_pixel)
-                        Spawn(BlueTile, x, y);
+                        Spawn(BlueTile, x, y, false, -0.06f);
                     else if (p == orange_pixel)
-                        Spawn(OrangeTile, x, y);
+                        Spawn(OrangeTile, x, y, false, -0.06f);
                     else if (p == magenta_pixel)
-                        Spawn(MagentaTile, x, y);
+                        Spawn(MagentaTile, x, y, false, -0.06f);
                 }
             }
 
@@ -111,7 +111,7 @@ namespace Assets
                 Spawn(end, x, y);
             else if (x < stage.width && !stage.GetPixel(x + 1, y).Equals(pixel))
             {
-                Spawn(end, x, y, true);
+                Spawn(end, x, y, flip_x: true);
                 var x_end = x;
                 var x_start = FindGroundStart(x, y, stage, pixel);
                 var collider = new GameObject("collider");
@@ -140,9 +140,9 @@ namespace Assets
             return current_x;
         }
 
-        private static void Spawn(GameObject obj, int x, int y, bool flip_x = false)
+        private static void Spawn(GameObject obj, int x, int y, bool flip_x = false, float offset_y = 0)
         {
-            var instance = (GameObject)Instantiate(obj, new Vector3(x * 0.16f, y * 0.16f), Quaternion.identity);
+            var instance = (GameObject)Instantiate(obj, new Vector3(x * 0.16f, y * 0.16f + offset_y), Quaternion.identity);
 
             if (flip_x)
                 instance.transform.localScale = new Vector3(-1, 1, 1);

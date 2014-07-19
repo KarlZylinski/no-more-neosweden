@@ -28,7 +28,6 @@ namespace Assets.Player
 
             foreach (var o in overlapping)
             {
-                Debug.Log(o);
                 Destroy(o.gameObject);
             }
         }

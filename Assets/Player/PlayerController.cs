@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 using UnityEngine;
 
 namespace Assets.Player
@@ -16,9 +17,21 @@ namespace Assets.Player
         private bool _on_ground;
         private float _horizontal_velocity;
         public float Facing { get; private set; }
+        private Animator _animator;
+        private bool _forehand = true;
 
 
         // Public interface.
+
+        public void FlipHand()
+        {
+            _forehand = !_forehand;
+        }
+
+        public bool IsForehand()
+        {
+            return _forehand;
+        }
 
         public void Start ()
         {
@@ -27,6 +40,7 @@ namespace Assets.Player
             Facing = 1;
             _on_ground = false;
             _horizontal_velocity = 0;
+            _animator = GetComponent<Animator>();
         }
 
         public void Update()
@@ -37,23 +51,33 @@ namespace Assets.Player
                 : movement_input.x > 0
                     ? 1
                     : -1;
+
+            transform.localScale = new Vector3(Facing, 1, 1);
+
+            if (Mathf.Abs(rigidbody2D.velocity.x) < 0.2f && Mathf.Abs(_horizontal_velocity) >= 0.2f)
+                _horizontal_velocity = 0;
         }
 
         public void FixedUpdate()
         {
             _on_ground = IsOnGround(transform.position, _collider, GroundLayerMask);
             var input = _input.GetMovementInput();
+
             _horizontal_velocity = CalculateHorizontalVelocity(_horizontal_velocity, input.x, MaxHorizontalVelocity, HorizontalAcceleration);
             rigidbody2D.velocity = new Vector2(_horizontal_velocity, CalculateVerticalVelocity(rigidbody2D.velocity.y, transform.position, _collider, GroundLayerMask));
-            _on_ground = ApplyJump( _input.GetJump(), _on_ground, rigidbody2D, JumpForce);
+            _on_ground = ApplyJump(_input.GetJump(), _on_ground, rigidbody2D, JumpForce, rigidbody2D.velocity.y);
+            if (Mathf.Abs(_horizontal_velocity) > 0.2f)
+                _animator.SetBaseAnimation(_forehand ? _animator.RunSpritesForehand : _animator.RunSpritesBackhand, _horizontal_velocity);
+            else
+                _animator.SetBaseAnimation(_animator.IdleSprites, _horizontal_velocity);
         }
 
 
         // Implementation.
 
-        private static bool ApplyJump(bool jump_key_pressed, bool on_ground, Rigidbody2D rigidbody, float jump_force)
+        private static bool ApplyJump(bool jump_key_pressed, bool on_ground, Rigidbody2D rigidbody, float jump_force, float vertical_speed)
         {
-            if (jump_key_pressed && on_ground)
+            if (jump_key_pressed && on_ground && vertical_speed < 0.1f)
             {
                 rigidbody.AddForce(new Vector2(0, jump_force));
                 return true;
@@ -64,7 +88,7 @@ namespace Assets.Player
 
         private static float CalculateHorizontalVelocity(float current_horizontal_velocity, float horizontal_movement_input, float max_horizontal_velocity, float horizontal_acceleration)
         {
-            if (Mathf.Abs(horizontal_movement_input) < float.Epsilon)
+            if (Mathf.Abs(horizontal_movement_input) < 0.3f)
                 return 0;
 
             if ((horizontal_movement_input > 0 && current_horizontal_velocity < 0) ||

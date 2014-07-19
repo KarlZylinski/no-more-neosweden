@@ -6,12 +6,12 @@ namespace Assets.Player
 {
     interface IWeaponBehaviour
     {
-        IWeaponBehaviour Update(PlayerWeapon weapon);
+        IWeaponBehaviour Update(PlayerWeapon weapon, Animator animator);
     }
 
     class IdleWeaponBehaivour : IWeaponBehaviour
     {
-        public IWeaponBehaviour Update(PlayerWeapon weapon)
+        public IWeaponBehaviour Update(PlayerWeapon weapon, Animator animator)
         {
             if (Input.GetKeyDown("joystick button 0"))
                 return new WeaponBehaviour("joystick button 0", weapon.BlueStrikePrototype);
@@ -38,7 +38,7 @@ namespace Assets.Player
             _strike_prototype = strike_prototype;
         }
 
-        public IWeaponBehaviour Update(PlayerWeapon weapon)
+        public IWeaponBehaviour Update(PlayerWeapon weapon, Animator animator)
         {
             _power += Time.deltaTime;
             var collider = weapon.GetComponent<CircleCollider2D>();
@@ -47,11 +47,18 @@ namespace Assets.Player
             if (!Input.GetKey(_key_code))
             {
                 var strike = (GameObject)Object.Instantiate(_strike_prototype);
-                strike.transform.position = weapon.transform.position + new Vector3((strike.renderer.bounds.extents.x * 2  + collider.radius) * controller.Facing, 0);
-                strike.transform.localScale = new Vector3(controller.Facing, 1);
+                strike.transform.position = weapon.transform.position + new Vector3((strike.renderer.bounds.extents.x * 2  + collider.radius / 2) * controller.Facing, 0);
+                strike.transform.localScale = new Vector3(controller.Facing * (_power + 1), 1);
 
                 var strike_comp = strike.GetComponent<WeaponStrike>();
-                strike_comp.Power = _power;
+                strike_comp.Power = (_power + 1);
+
+                var strike_collider = strike.GetComponent<CircleCollider2D>();
+                strike_collider.radius *= (_power + 1);
+
+                var x_vel = controller.rigidbody2D.velocity.x;
+                animator.SetTempAnimation(controller.IsForehand() ? animator.HitSpritesForehand : animator.HitSpritesBackhand, Mathf.Abs(x_vel) > 0.1 ? x_vel : 1);
+                controller.FlipHand();
                 
                 return new IdleWeaponBehaivour();
             }
@@ -70,18 +77,20 @@ namespace Assets.Player
         public GameObject BlueStrikePrototype;
         private PlayerInput _input;
         private IWeaponBehaviour _current_weapon_behaviour;
+        private Animator _animator;
 
         // Public interface.
 
-        void Start ()
+        public void Start ()
         {
             _input = GetComponent<PlayerInput>();
             _current_weapon_behaviour = new IdleWeaponBehaivour();
+            _animator = GetComponent<Animator>();
         }
 
-        void Update ()
+        public void Update()
         {
-            _current_weapon_behaviour = _current_weapon_behaviour.Update(this);
+            _current_weapon_behaviour = _current_weapon_behaviour.Update(this, _animator);
         }
     }
 }

@@ -47,12 +47,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\CameraController.cs" />
+     <Compile Include="Assets\Player\Animator.cs" />
      <Compile Include="Assets\Player\PlayerController.cs" />
      <Compile Include="Assets\Player\PlayerInput.cs" />
      <Compile Include="Assets\Player\PlayerWeapon.cs" />
      <Compile Include="Assets\Player\WeaponStrike.cs" />
      <Compile Include="Assets\SettingsSetter.cs" />
      <Compile Include="Assets\StageLoader.cs" />
+     <Compile Include="Assets\TileFloaty.cs" />
      <Compile Include="Assets\Tiles\TileController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

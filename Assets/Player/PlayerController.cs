@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using UnityEngine;
 
 namespace Assets.Player
@@ -14,6 +14,7 @@ namespace Assets.Player
         private CircleCollider2D _collider;
         private PlayerInput _input;
         private bool _on_ground;
+        public float Facing { get; private set; }
 
 
         // Public interface.
@@ -22,7 +23,18 @@ namespace Assets.Player
         {
             _collider = GetComponent<CircleCollider2D>();
             _input = GetComponent<PlayerInput>();
+            Facing = 1;
             _on_ground = false;
+        }
+
+        public void Update()
+        {
+            var movement_input = _input.GetMovementInput();
+            Facing = Math.Abs(movement_input.x) < float.Epsilon
+                ? Facing
+                : movement_input.x > 0
+                    ? 1
+                    : -1;
         }
 
         public void FixedUpdate()

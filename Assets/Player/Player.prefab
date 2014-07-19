@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 50: {fileID: 5000000}
   - 58: {fileID: 5800000}
+  - 114: {fileID: 11400004}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -38,15 +39,15 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mass: 10
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
   m_FixedAngle: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!58 &5800000
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -80,12 +81,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aeef34758960294bb4408e7759bbbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpForce: 1000
+  JumpForce: 500
   MaxHorizontalVelocity: 200
-  HorizontalAcceleration: 1
+  HorizontalAcceleration: 2
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bce60c3a504e684ca7f4b926a819c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MagentaStrikePrototype: {fileID: 100000, guid: 4bfeb0a959aa1284da955479f4077b2d,
+    type: 2}
+  YellowStrikePrototype: {fileID: 100000, guid: 69e4e15d6f424674e9a41a830ba805ba,
+    type: 2}
+  OrangeStrikePrototype: {fileID: 100000, guid: 91dbebd521dab7246a1be6752b97e109,
+    type: 2}
+  BlueStrikePrototype: {fileID: 100000, guid: 20ff2e1278c95034f83af71372c837ac, type: 2}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

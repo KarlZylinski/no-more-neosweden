@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Assets.Player
 {
@@ -15,17 +17,29 @@ namespace Assets.Player
                 return this;
 
             var rotation = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
-            
-            if (rotation >= -45 && rotation <= 45)
-                return new MagentaWeaponBehaviour();
+
+            if (rotation >= 135 || rotation <= -135)
+                return new WeaponBehaviour(weapon.MagentaStrikePrototype);
+            if (rotation < 135 && rotation > 45)
+                return new WeaponBehaviour(weapon.OrangeStrikePrototype);
+            if (rotation <= 45 && rotation >= -45)
+                return new WeaponBehaviour(weapon.YellowStrikePrototype);
+            if (rotation < -45 && rotation > -135)
+                return new WeaponBehaviour(weapon.BlueStrikePrototype);
 
             return this;
         }
     }
 
-    class MagentaWeaponBehaviour : IWeaponBehaviour
+    class WeaponBehaviour : IWeaponBehaviour
     {
         private float _power;
+        private readonly GameObject _strike_prototype;
+
+        public WeaponBehaviour(GameObject strike_prototype)
+        {
+            _strike_prototype = strike_prototype;
+        }
 
         public IWeaponBehaviour Update(Vector2 input, PlayerWeapon weapon)
         {
@@ -35,7 +49,7 @@ namespace Assets.Player
 
             if (input.magnitude < 0.1f)
             {
-                var magenta_strike = (GameObject)Object.Instantiate(weapon.MagentaStrikePrototype);
+                var magenta_strike = (GameObject)Object.Instantiate(_strike_prototype);
                 magenta_strike.transform.position = weapon.transform.position + new Vector3((magenta_strike.renderer.bounds.extents.x * 2  + collider.radius) * controller.Facing, 0);
                 magenta_strike.transform.localScale = new Vector3(controller.Facing, 1);
                 
@@ -51,6 +65,9 @@ namespace Assets.Player
         // State.
 
         public GameObject MagentaStrikePrototype;
+        public GameObject YellowStrikePrototype;
+        public GameObject OrangeStrikePrototype;
+        public GameObject BlueStrikePrototype;
         private PlayerInput _input;
         private IWeaponBehaviour _current_weapon_behaviour;
 

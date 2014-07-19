@@ -30,7 +30,13 @@ namespace Assets.Player
         {
             _movement_input = CalculateVelocity(_movement_input, ReadInput(MovementAxisX, MovementAxisY));
             _attack_input = CalculateVelocity(_movement_input, ReadInput(AttackAxisX, AttackAxisY));
-            _jump = Math.Abs(Input.GetAxis(JumpAxis)) > 0.2f;
+
+            var jump_button_down = Math.Abs(Input.GetAxis(JumpAxis)) > 0.2f;
+
+            if (!jump_button_down)
+                _jump = false;
+            else if (!_jump)
+                _jump = true;
         }
 
         public Vector2 GetMovementInput()

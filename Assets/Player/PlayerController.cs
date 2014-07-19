@@ -5,45 +5,56 @@ namespace Assets.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        private const float JumpForce = 100.0f;
+
         // State.
 
         public LayerMask GroundLayerMask;
         private CircleCollider2D _collider;
-        private bool _on_ground;
         private PlayerInput _input;
+        private bool _on_ground;
 
         // Public interface.
 
         public void Start ()
         {
             _collider = GetComponent<CircleCollider2D>();
-            _on_ground = false;
             _input = GetComponent<PlayerInput>();
-            
+            _on_ground = false;
         }
 
         public void FixedUpdate()
         {
-            _on_ground = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y) + _collider.center,
-                    _collider.radius, GroundLayerMask);
-            rigidbody2D.velocity = CalculateVelocity(rigidbody2D.velocity, _input.GetMovementInput(), _input.GetJump(), _on_ground);
+            _on_ground = IsOnGround(transform.position, _collider, GroundLayerMask);
+            rigidbody2D.velocity = CalculateVelocity(rigidbody2D.velocity, _input.GetMovementInput());
+            ApplyJump( _input.GetJump(), _on_ground, rigidbody2D);
         }
 
 
         // Implementation.
 
-        private static Vector2 CalculateVelocity(Vector2 current_velocity, Vector2 movement_input, bool jump, bool on_ground)
+        private static void ApplyJump(bool jump_key_pressed, bool on_ground, Rigidbody2D rigidbody)
         {
-            return new Vector2(movement_input.x,
-                CalculateVerticalSpeed(current_velocity.y, jump, on_ground));
+            if (jump_key_pressed && on_ground)
+                rigidbody.AddForce(new Vector2(0, JumpForce));
         }
 
-        // ADD FORCE INSTEAD ON JUMP. FIXES STUCK PROBLEM. THEN DO ATTACKING.
-        private static float CalculateVerticalSpeed(float current_vertical_speed, bool jump, bool on_ground)
+        private static Vector2 CalculateVelocity(Vector2 current_velocity, Vector2 movement_input)
         {
-            var jump_speed = jump && on_ground ? 4.0f : 0.0f;
-            var vertical_speed = on_ground ? 0 : current_vertical_speed;
-            return vertical_speed + jump_speed;
+            return new Vector2(movement_input.x, current_velocity.y);
+        }
+
+        private static bool IsOnGround(Vector2 position, CircleCollider2D collider, LayerMask ground_layer_mask)
+        {
+            var collider_center = new Vector2(position.x, position.y) + collider.center;
+            var touched_ground = Physics2D.OverlapCircle(collider_center, collider.radius, ground_layer_mask);
+            var touched_below = touched_ground != null && (touched_ground.transform.position.y - touched_ground.bounds.extents.y / 2) >=
+                                (collider_center.y + collider.radius);
+
+            if (touched_below)
+                return true;
+
+            return Physics2D.Raycast(position, new Vector2(0, -1), collider.radius * 2, ground_layer_mask).collider != null;
         }
     }
 }

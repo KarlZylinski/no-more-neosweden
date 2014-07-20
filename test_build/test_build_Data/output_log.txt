@@ -10,9 +10,15 @@ Platform assembly: D:\Repositories\no-more-neosweden\test_build\test_build_Data\
 Loading D:\Repositories\no-more-neosweden\test_build\test_build_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: D:\Repositories\no-more-neosweden\test_build\test_build_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading D:\Repositories\no-more-neosweden\test_build\test_build_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-- Completed reload, in  0.040 seconds
+- Completed reload, in  0.037 seconds
 desktop: 1920x1080 59Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found.
 <RI> Input initialized.
+UnloadTime: 0.759934 ms
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 374.
+Total: 1.309892 ms (FindLiveObjects: 0.035922 ms CreateObjectMapping: 0.029507 ms MarkObjects: 0.240767 ms  DeleteObjects: 0.047469 ms)
+
 Platform assembly: D:\Repositories\no-more-neosweden\test_build\test_build_Data\Managed\System.Core.dll (this message is harmless)

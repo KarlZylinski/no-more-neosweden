@@ -18,6 +18,7 @@ namespace Assets
         public int Lane;
         private AudioSource _music;
         private bool _doubled;
+        private bool _quad;
 
         public void Start()
         {
@@ -31,6 +32,7 @@ namespace Assets
             _music = GetComponent<AudioSource>();
             NewLane();
             _doubled = false;
+            _quad = false;
         }
 
         public void Awake()
@@ -47,7 +49,7 @@ namespace Assets
         public void Update()
         {
             _timer += Time.deltaTime;
-            var current_player_pos = new Vector2(_controller.transform.position.x + 0.2f, _controller.transform.position.y);
+            var current_player_pos = new Vector2(_controller.transform.position.x + (_quad ? 0 : 0.2f), _controller.transform.position.y);
             var distance_since_last_spawn = Vector2.Distance(current_player_pos, _last_spawn_player_pos);
 
             if (_timer >= Beat)
@@ -56,14 +58,27 @@ namespace Assets
 
                 var distance_to_spawn_at = _controller.GetHorizontalVelocity() * Beat * 16;
 
+                var dunder = _music.time >= 143;
                 var imgettinghacked = _music.time >= 65;
 
-                var divisor = _music.time >= 143 ? 64 : (imgettinghacked ? 16 : _music.time >= 35 ? 8 : 4);
+                var divisor = dunder ? 64 : (imgettinghacked ? 16 : _music.time >= 35 ? 8 : 4);
+
+                if (_music.time >= 180)
+                {
+                    Application.LoadLevel(2);
+                    return;
+                }
 
                 if (imgettinghacked && !_doubled)
                 {
                     _controller.DoubleHorizontalVelocity();
                     _doubled = true;
+                }
+
+                if (dunder && !_quad)
+                {
+                    _controller.BoostMore();
+                    _quad = true;
                 }
 
                 var rand_increase = _random.Next() % 100;

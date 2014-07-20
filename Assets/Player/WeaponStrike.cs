@@ -63,6 +63,8 @@ namespace Assets.Player
                     _player_controller.Boost();
                 }
 
+                GetComponent<AudioSource>().Play();
+
                 Destroy(o.gameObject);
 
                 _used = true;

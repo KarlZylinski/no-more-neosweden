@@ -58,6 +58,8 @@
      <Compile Include="Assets\Player\WeaponStrike.cs" />
      <Compile Include="Assets\RandomSprite.cs" />
      <Compile Include="Assets\Score.cs" />
+     <Compile Include="Assets\ScoreObject.cs" />
+     <Compile Include="Assets\ScoreScreen.cs" />
      <Compile Include="Assets\SettingsSetter.cs" />
      <Compile Include="Assets\StageLoader.cs" />
      <Compile Include="Assets\Swing.cs" />

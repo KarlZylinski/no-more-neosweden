@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Animator = Assets.Player.Animator;
 
 namespace Assets
 {
@@ -11,6 +12,7 @@ namespace Assets
         private Transform _player;
         public GameObject Explosion;
         public Color ExplosionTint;
+        private static System.Random _random = new System.Random();
 
         public void Start()
         {
@@ -46,8 +48,12 @@ namespace Assets
 
         public void Explode()
         {
-            var go = (GameObject)Instantiate(Explosion, transform.position, transform.rotation);
-            go.GetComponent<SpriteRenderer>().color = ExplosionTint;
+            for (var i = 0; i < 4; ++i)
+            {
+                var go = (GameObject)Instantiate(Explosion, transform.position + new Vector3((_random.Next() % 100) / 500.0f - 0.1f, (_random.Next() % 100) / 500.0f - 0.1f, (_random.Next() % 100) / 500.0f - 0.1f), transform.rotation);
+                go.GetComponent<Animator>().AnimationSpeed = _random.Next() % 255 / 255.0f;
+                go.GetComponent<SpriteRenderer>().color = ExplosionTint;
+            }
         }
 
         private void FloatVertical()

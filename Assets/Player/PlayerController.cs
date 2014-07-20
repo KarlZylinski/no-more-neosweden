@@ -80,6 +80,7 @@ namespace Assets.Player
 
         public int DistanceTravelled()
         {
+            GameObject.Find("ScoreObject").GetComponent<ScoreObject>().Score = (int) _distance;
             return (int)_distance;
         }
 
@@ -206,6 +207,11 @@ namespace Assets.Player
         {
             _distance += 5.0f;
             _horizontal_velocity += 0.04f;
+        }
+
+        public void BoostMore()
+        {
+            _horizontal_velocity *= 1.3f;
         }
     }
 }

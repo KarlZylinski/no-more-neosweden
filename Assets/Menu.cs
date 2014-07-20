@@ -1,6 +1,5 @@
 ﻿using Assets.Player;
 using UnityEngine;
-using System.Collections;
 
 public class Menu : MonoBehaviour
 {

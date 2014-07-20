@@ -26,6 +26,7 @@ namespace Assets.Player
         private float _distance;
         private float _temp_boost_until;
         private bool _boosting;
+        private Transform _shadow;
 
 
         // Public interface.
@@ -42,7 +43,7 @@ namespace Assets.Player
 
         public void BoostHorizontalVelocity()
         {
-            _horizontal_velocity += 0.02f;
+            _horizontal_velocity += 0.015f;
         }
 
         public void DoubleHorizontalVelocity()
@@ -74,6 +75,7 @@ namespace Assets.Player
             _distance = 0;
             _temp_boost_until = 0;
             _boosting = false;
+            _shadow = transform.GetChild(0).transform;
         }
 
         public int DistanceTravelled()
@@ -107,16 +109,22 @@ namespace Assets.Player
                 _horizontal_velocity /= 4;
             }
 
-
             var target_lane_dist = (_beat_matcher.Lanes[_lane_index]*0.16f + 0.04f) - transform.position.y;
+
             transform.position += new Vector3(_horizontal_velocity, target_lane_dist * 5, 0) * Time.deltaTime;
             _distance += _horizontal_velocity * Time.deltaTime;
 
-            if (Mathf.Abs(target_lane_dist) > 0.01f)
+            var abs_lane_dist = Mathf.Abs(target_lane_dist);
+            if (abs_lane_dist > 0.01f)
+            {
                 _animator.SetBaseAnimation(_animator.FlySprite, 1);
+                _shadow.localScale = new Vector3(1 - abs_lane_dist, 1 - abs_lane_dist, 1 - abs_lane_dist);
+            }
             else
             {
-                _animator.SetBaseAnimation(_forehand ? _animator.RunSpritesForehand : _animator.RunSpritesBackhand, _horizontal_velocity);
+                _shadow.localScale = new Vector3(1,1,1);
+                _animator.SetBaseAnimation(_forehand ? _animator.RunSpritesForehand : _animator.RunSpritesBackhand,
+                    _horizontal_velocity);
             }
 
             var movement = _input.GetMovementInput();
@@ -197,7 +205,7 @@ namespace Assets.Player
         public void Boost()
         {
             _distance += 5.0f;
-            _horizontal_velocity += 0.05f;
+            _horizontal_velocity += 0.04f;
         }
     }
 }

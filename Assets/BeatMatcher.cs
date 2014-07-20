@@ -47,7 +47,7 @@ namespace Assets
         public void Update()
         {
             _timer += Time.deltaTime;
-            var current_player_pos = new Vector2(_controller.transform.position.x, _controller.transform.position.y);
+            var current_player_pos = new Vector2(_controller.transform.position.x + 0.2f, _controller.transform.position.y);
             var distance_since_last_spawn = Vector2.Distance(current_player_pos, _last_spawn_player_pos);
 
             if (_timer >= Beat)

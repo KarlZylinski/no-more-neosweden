@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\BeatMatcher.cs" />
+     <Compile Include="Assets\Blink.cs" />
      <Compile Include="Assets\CameraController.cs" />
      <Compile Include="Assets\Center.cs" />
      <Compile Include="Assets\Player\Animator.cs" />
@@ -58,8 +59,10 @@
      <Compile Include="Assets\Score.cs" />
      <Compile Include="Assets\SettingsSetter.cs" />
      <Compile Include="Assets\StageLoader.cs" />
+     <Compile Include="Assets\Swing.cs" />
      <Compile Include="Assets\TileFloaty.cs" />
      <Compile Include="Assets\Tiles\TileController.cs" />
+     <Compile Include="Assets\Visible.cs" />
      <Compile Include="Assets\WallE.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -373,7 +373,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2761b68694316749972312f2da573a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Button: joystick button 3
+  Button:
+  - w
+  - joystick button 3
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -385,7 +387,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2761b68694316749972312f2da573a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Button: joystick button 0
+  Button:
+  - s
+  - joystick button 0
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -397,7 +401,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2761b68694316749972312f2da573a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Button: joystick button 2
+  Button:
+  - a
+  - joystick button 2
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,7 +415,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2761b68694316749972312f2da573a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Button: joystick button 1
+  Button:
+  - d
+  - joystick button 1
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1

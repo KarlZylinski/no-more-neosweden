@@ -50,6 +50,7 @@
      <Compile Include="Assets\Blink.cs" />
      <Compile Include="Assets\CameraController.cs" />
      <Compile Include="Assets\Center.cs" />
+     <Compile Include="Assets\Menu.cs" />
      <Compile Include="Assets\Player\Animator.cs" />
      <Compile Include="Assets\Player\PlayerController.cs" />
      <Compile Include="Assets\Player\PlayerInput.cs" />

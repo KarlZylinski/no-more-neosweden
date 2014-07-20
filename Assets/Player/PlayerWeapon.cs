@@ -20,13 +20,13 @@ namespace Assets.Player
             if (_cooldown > 0)
                 return this;
 
-            if (Input.GetKeyDown("joystick button 0"))
+            if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown("s"))
                 Lax(weapon, animator, weapon.BlueStrikePrototype);
-            if (Input.GetKeyDown("joystick button 1"))
+            if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown("d"))
                 Lax(weapon, animator, weapon.YellowStrikePrototype);
-            if (Input.GetKeyDown("joystick button 2"))
+            if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("a"))
                 Lax(weapon, animator, weapon.MagentaStrikePrototype);
-            if (Input.GetKeyDown("joystick button 3"))
+            if (Input.GetKeyDown("joystick button 3") || Input.GetKeyDown("w"))
                 Lax(weapon, animator, weapon.OrangeStrikePrototype);
 
             return this;

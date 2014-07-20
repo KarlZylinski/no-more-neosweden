@@ -19,31 +19,17 @@ namespace Assets.Player
         public void Start()
         {
             _movement_input = new Vector2(0, 0);
-            _jump = false;
         }
 
         public void Update()
         {
             _movement_input = CalculateVelocity(_movement_input, ReadInput(MovementAxisX, MovementAxisY));
-
-            var jump_button_down = Math.Abs(Input.GetAxis(JumpAxis)) > 0.2f;
-
-            if (!jump_button_down)
-                _jump = false;
-            else if (!_jump)
-                _jump = true;
         }
 
         public Vector2 GetMovementInput()
         {
             return _movement_input;
         }
-
-        public bool GetJump()
-        {
-            return _jump;
-        }
-
 
         // Implementation.
 

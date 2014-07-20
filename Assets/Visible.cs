@@ -4,7 +4,7 @@ using System.Collections;
 public class Visible : MonoBehaviour
 {
     private SpriteRenderer _sprite;
-    public string Button;
+    public string[] Button;
 
 	// Use this for initialization
 	void Start ()
@@ -16,7 +16,18 @@ public class Visible : MonoBehaviour
 	void Update ()
 	{
 	    var c = _sprite.color;
-        c.a = Input.GetKey(Button) ? 1 : 0;
+        foreach(var s in Button)
+        {
+            var down = Input.GetKey(s);
+
+            if (down)
+            {
+                c.a = 1;
+                break;
+            }
+
+            c.a = 0;
+        }
 	    _sprite.color = c;
 	}
 }

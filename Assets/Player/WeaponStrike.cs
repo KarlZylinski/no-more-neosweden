@@ -9,11 +9,13 @@ namespace Assets.Player
         public LayerMask LayerMask;
         private float _start_time;
         private CircleCollider2D _collider;
+        private PlayerController _player_controller;
 
         public void Start()
         {
             _start_time = Time.time;
             _collider = GetComponent<CircleCollider2D>();
+            _player_controller = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         }
 
         public void Update()
@@ -28,6 +30,7 @@ namespace Assets.Player
 
             foreach (var o in overlapping)
             {
+                _player_controller.BoostHorizontalVelocity();
                 Destroy(o.gameObject);
             }
         }

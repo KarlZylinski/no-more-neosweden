@@ -23,6 +23,21 @@ namespace Assets.Player
 
         // Public interface.
 
+        public float GetHorizontalVelocity()
+        {
+            return _horizontal_velocity;
+        }
+
+        public void ResetHorizontalVelocity()
+        {
+            _horizontal_velocity = 1.0f;
+        }
+
+        public void BoostHorizontalVelocity()
+        {
+            _horizontal_velocity += 0.1f;
+        }
+
         public void FlipHand()
         {
             _forehand = !_forehand;
@@ -39,7 +54,7 @@ namespace Assets.Player
             _input = GetComponent<PlayerInput>();
             Facing = 1;
             _on_ground = false;
-            _horizontal_velocity = 0;
+            ResetHorizontalVelocity();
             _animator = GetComponent<Animator>();
         }
 
@@ -55,7 +70,7 @@ namespace Assets.Player
             transform.localScale = new Vector3(Facing, 1, 1);
 
             if (Mathf.Abs(rigidbody2D.velocity.x) < 0.2f && Mathf.Abs(_horizontal_velocity) >= 0.2f)
-                _horizontal_velocity = 0;
+                ResetHorizontalVelocity();
         }
 
         public void FixedUpdate()
@@ -63,7 +78,7 @@ namespace Assets.Player
             _on_ground = IsOnGround(transform.position, _collider, GroundLayerMask);
             var input = _input.GetMovementInput();
 
-            _horizontal_velocity = CalculateHorizontalVelocity(_horizontal_velocity, input.x, MaxHorizontalVelocity, HorizontalAcceleration);
+            //_horizontal_velocity = CalculateHorizontalVelocity(_horizontal_velocity, input.x, MaxHorizontalVelocity, HorizontalAcceleration);
             rigidbody2D.velocity = new Vector2(_horizontal_velocity, CalculateVerticalVelocity(rigidbody2D.velocity.y, transform.position, _collider, GroundLayerMask));
             _on_ground = ApplyJump(_input.GetJump(), _on_ground, rigidbody2D, JumpForce, rigidbody2D.velocity.y);
             if (Mathf.Abs(_horizontal_velocity) > float.Epsilon)
@@ -86,7 +101,7 @@ namespace Assets.Player
             return on_ground;
         }
 
-        private static float CalculateHorizontalVelocity(float current_horizontal_velocity, float horizontal_movement_input, float max_horizontal_velocity, float horizontal_acceleration)
+        /*private static float CalculateHorizontalVelocity(float current_horizontal_velocity, float horizontal_movement_input, float max_horizontal_velocity, float horizontal_acceleration)
         {
             if (Mathf.Abs(horizontal_movement_input) < 0.3f)
                 return 0;
@@ -96,7 +111,7 @@ namespace Assets.Player
                 return horizontal_movement_input * horizontal_acceleration * Time.deltaTime;
 
             return current_horizontal_velocity + horizontal_movement_input * horizontal_acceleration * Time.deltaTime;
-        }
+        }*/
 
         private static float CalculateVerticalVelocity(float current_vertical_velocity, Vector2 position, CircleCollider2D collider, LayerMask ground_layer_mask)
         {

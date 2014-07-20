@@ -77,7 +77,7 @@ namespace Assets.Player
             _frame_index = 0;
             _current_time = 0;
 
-            if (_current_temp_animation == null)
+            if (_current_temp_animation == null && _sprite_renderer != null && _current_base_animation != null)
                 _sprite_renderer.sprite = _current_base_animation[_frame_index];
         }
 

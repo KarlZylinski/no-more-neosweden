@@ -83,7 +83,8 @@ namespace Assets
 
             while (current_near_bg_x_pos < Stage.width*0.16f)
             {
-                Instantiate(NearBackground, new Vector3(current_near_bg_x_pos, 1.2f, 1), Quaternion.identity);
+                var go = (GameObject)Instantiate(NearBackground, new Vector3(current_near_bg_x_pos, 1.2f, 1), Quaternion.identity);
+                go.isStatic = true;
                 current_near_bg_x_pos += near_bg_width;
             }
 
@@ -92,7 +93,8 @@ namespace Assets
 
             while (current_far_bg_x_pos < Stage.width * 0.16f)
             {
-                Instantiate(FarBackground, new Vector3(current_far_bg_x_pos, 1.2f, 3), Quaternion.identity);
+                var go = (GameObject)Instantiate(FarBackground, new Vector3(current_far_bg_x_pos, 1.2f, 3), Quaternion.identity);
+                go.isStatic = true;
                 current_far_bg_x_pos += far_bg_width;
             }
         }
@@ -143,6 +145,7 @@ namespace Assets
         private static void Spawn(GameObject obj, int x, int y, bool flip_x = false, float offset_y = 0)
         {
             var instance = (GameObject)Instantiate(obj, new Vector3(x * 0.16f, y * 0.16f + offset_y), Quaternion.identity);
+            instance.isStatic = true;
 
             if (flip_x)
                 instance.transform.localScale = new Vector3(-1, 1, 1);

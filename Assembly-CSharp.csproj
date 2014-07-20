@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BeatMatcher.cs" />
      <Compile Include="Assets\CameraController.cs" />
      <Compile Include="Assets\Player\Animator.cs" />
      <Compile Include="Assets\Player\PlayerController.cs" />

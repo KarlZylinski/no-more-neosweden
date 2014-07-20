@@ -97,9 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aeef34758960294bb4408e7759bbbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpForce: 1000
-  MaxHorizontalVelocity: 200
-  HorizontalAcceleration: 1
+  JumpForce: 600
+  MaxHorizontalVelocity: 50
+  HorizontalAcceleration: .100000001
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 7936

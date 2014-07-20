@@ -11,6 +11,7 @@ namespace Assets
         private float _timer;
         private Vector2 _last_spawn_player_pos;
         public GameObject[] Blocks;
+        public GameObject Walle;
         private System.Random _random;
         public int[] Lanes;
         private int _lane_combo;
@@ -73,6 +74,9 @@ namespace Assets
                 if (rand_increase < (20/divisor))
                     SpawnBlock(current_player_pos, _random.Next(), distance_to_spawn_at, 1 + _random.Next() % 2);
 
+                if (rand_increase <= 1)
+                    SpawnWalle(current_player_pos, _random.Next(), distance_to_spawn_at);
+
                 var min_distance = distance_to_spawn_at / divisor;
 
                 if (distance_since_last_spawn > min_distance)
@@ -97,6 +101,21 @@ namespace Assets
                         Quaternion.identity);
             var block_comp = block.GetComponent<TileFloaty>();
             block_comp.SetHitTime(Time.time + Beat * (16 + extra_beat));
+        }
+
+        private void SpawnWalle(Vector2 current_player_pos, int r, float distance_to_spawn_at, int extra_beat = 0)
+        {
+            --_lane_combo;
+
+            if (_lane_combo == 0)
+                NewLane();
+
+            _last_spawn_player_pos = current_player_pos;
+            var block =
+                (GameObject)
+                    Instantiate(Walle,
+                        new Vector2(distance_to_spawn_at + extra_beat * _controller.GetHorizontalVelocity() * Beat, Lanes[_random.Next() % Lanes.Count()] * 0.16f + 0.035f) + new Vector2(current_player_pos.x, 0),
+                        Quaternion.identity);
         }
     }
 }

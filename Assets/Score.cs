@@ -38,7 +38,7 @@ namespace Assets
             var current_x = 0.09f;
             foreach (var c in score_as_string)
             {
-                var p = new Vector2(current_x, -0.82f);
+                var p = new Vector2(current_x, -0.73f);
 
                 switch (c)
                 {

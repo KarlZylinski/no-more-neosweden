@@ -24,6 +24,8 @@ namespace Assets.Player
         private int _lane_index;
         private float _movement_y_last_frame;
         private float _distance;
+        private float _temp_boost_until;
+        private bool _boosting;
 
 
         // Public interface.
@@ -40,7 +42,7 @@ namespace Assets.Player
 
         public void BoostHorizontalVelocity()
         {
-            _horizontal_velocity += 0.015f;
+            _horizontal_velocity += 0.02f;
         }
 
         public void DoubleHorizontalVelocity()
@@ -70,6 +72,8 @@ namespace Assets.Player
             _lane_index = 0;
             _movement_y_last_frame = 0;
             _distance = 0;
+            _temp_boost_until = 0;
+            _boosting = false;
         }
 
         public int DistanceTravelled()
@@ -96,6 +100,13 @@ namespace Assets.Player
 
            // _horizontal_velocity = CalculateHorizontalVelocity(_horizontal_velocity, input.x, MaxHorizontalVelocity, HorizontalAcceleration);
             //rigidbody2D.velocity = new Vector2(_horizontal_velocity, CalculateVerticalVelocity(rigidbody2D.velocity.y, transform.position, _collider, GroundLayerMask));
+
+            if (_boosting && Time.time > _temp_boost_until)
+            {
+                _boosting = false;
+                _horizontal_velocity /= 4;
+            }
+
 
             var target_lane_dist = (_beat_matcher.Lanes[_lane_index]*0.16f + 0.04f) - transform.position.y;
             transform.position += new Vector3(_horizontal_velocity, target_lane_dist * 5, 0) * Time.deltaTime;
@@ -181,6 +192,12 @@ namespace Assets.Player
                 return true;
 
             return Physics2D.Raycast(position, new Vector2(0, -1), collider.radius + collider.radius, ground_layer_mask).collider != null;
+        }
+
+        public void Boost()
+        {
+            _distance += 5.0f;
+            _horizontal_velocity += 0.05f;
         }
     }
 }

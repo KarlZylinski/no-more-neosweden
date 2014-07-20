@@ -54,6 +54,14 @@ namespace Assets.Player
 
                 if (floaty != null)
                     floaty.Explode();
+                    
+                var walle = o.GetComponent<WallE>();
+
+                if (walle != null)
+                {
+                    walle.Explode();
+                    _player_controller.Boost();
+                }
 
                 Destroy(o.gameObject);
 

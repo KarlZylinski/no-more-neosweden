@@ -48,11 +48,14 @@
   <ItemGroup>
      <Compile Include="Assets\BeatMatcher.cs" />
      <Compile Include="Assets\CameraController.cs" />
+     <Compile Include="Assets\Center.cs" />
      <Compile Include="Assets\Player\Animator.cs" />
      <Compile Include="Assets\Player\PlayerController.cs" />
      <Compile Include="Assets\Player\PlayerInput.cs" />
      <Compile Include="Assets\Player\PlayerWeapon.cs" />
      <Compile Include="Assets\Player\WeaponStrike.cs" />
+     <Compile Include="Assets\RandomSprite.cs" />
+     <Compile Include="Assets\Score.cs" />
      <Compile Include="Assets\SettingsSetter.cs" />
      <Compile Include="Assets\StageLoader.cs" />
      <Compile Include="Assets\TileFloaty.cs" />

@@ -50,6 +50,14 @@ TagManager:
     userID: 3
     uniqueID: 2022333365
     locked: 0
+  - name: Background4
+    userID: 6
+    uniqueID: 2471387341
+    locked: 0
+  - name: Ground
+    userID: 5
+    uniqueID: 4262900853
+    locked: 0
   - name: Default
     userID: 0
     uniqueID: 0
@@ -57,4 +65,12 @@ TagManager:
   - name: Player
     userID: 4
     uniqueID: 98848021
+    locked: 0
+  - name: GUI
+    userID: 7
+    uniqueID: 2546198929
+    locked: 0
+  - name: GUI_text
+    userID: 8
+    uniqueID: 2095422305
     locked: 0

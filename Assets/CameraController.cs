@@ -32,7 +32,7 @@ namespace Assets
         {
             var camera_position = camera.transform.position;
             camera_position.x = position.x + (camera.rect.width / 320);
-            camera_position.y = position.y + (camera.rect.height / 180 / 2);
+            camera_position.y = 4 * 0.16f + (camera.rect.height / 180 / 1.6f);
             camera.transform.position = camera_position;
         }
     }

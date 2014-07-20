@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21200000}
   - 61: {fileID: 6100000}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400002}
   m_Layer: 10
   m_Name: YellowTile
   m_TagString: Untagged
@@ -67,7 +68,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Size: {x: .159999996, y: .159999996}
   m_Center: {x: 0, y: 0}
 --- !u!114 &11400000
@@ -81,6 +82,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5162511d5e5829e4b8fa7b5938e596d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Explosion: {fileID: 100000, guid: 3f517715257430d4fb993f3dd42b93fe, type: 2}
+  ExplosionTint: {r: 1, g: .972413778, b: 0, a: 1}
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c149326718018348a5615cedf67cd62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IdleSprites:
+  - {fileID: 21300002, guid: d0932293e7f83644880771e5377845bb, type: 3}
+  - {fileID: 21300004, guid: d0932293e7f83644880771e5377845bb, type: 3}
+  - {fileID: 21300006, guid: d0932293e7f83644880771e5377845bb, type: 3}
+  - {fileID: 21300008, guid: d0932293e7f83644880771e5377845bb, type: 3}
+  - {fileID: 21300010, guid: d0932293e7f83644880771e5377845bb, type: 3}
+  - {fileID: 21300012, guid: d0932293e7f83644880771e5377845bb, type: 3}
+  RunSpritesBackhand: []
+  HitSpritesBackhand: []
+  RunSpritesForehand: []
+  HitSpritesForehand: []
+  FlySprite: []
+  KillWhenDone: 0
+  AnimationSpeed: .200000003
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

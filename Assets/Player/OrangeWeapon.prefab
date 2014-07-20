@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21200000}
   - 114: {fileID: 11400000}
   - 58: {fileID: 5800000}
+  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: OrangeWeapon
   m_TagString: Untagged
@@ -52,11 +53,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626b141efcef87845b88068c650361fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lifetime: .5
+  Lifetime: 1
   Power: 1
   LayerMask:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55796842a261414fa43707b26dc48a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sprites:
+  - {fileID: 21300000, guid: 2d73dbe93e276dd488817787796861bf, type: 3}
+  - {fileID: 21300000, guid: 41fd93300526e5b4a9f89daa3a19708f, type: 3}
+  - {fileID: 21300000, guid: 587c54b020fd82347af827ca37f713be, type: 3}
+  - {fileID: 21300000, guid: 01ef0e3e00e0ceb4285c182397a03770, type: 3}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -77,8 +94,8 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 867ac2e2fff16aa468543be1146df1f6, type: 3}
-  m_Color: {r: 1, g: .351724148, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0393787ef0157d348b8088d5f20edd76, type: 3}
+  m_Color: {r: 1, g: .523326576, b: .264705896, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

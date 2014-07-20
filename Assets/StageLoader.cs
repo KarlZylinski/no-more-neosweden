@@ -21,6 +21,8 @@ namespace Assets
         public GameObject FarBackground;
         public GameObject NearBackground;
 
+        public GameObject[] NearestBackgrounds;
+
         public void Start()
         {
             CreateWorld();
@@ -49,8 +51,8 @@ namespace Assets
 
                     if (p.Equals(player_pixel))
                         Spawn(Player, x, y);
-                    else if (y == 356 && p.Equals(ground_pixel))
-                        SpawnEndPieceOrNormal(x, y, ground_pixel, GroundTiles, GroundTileEnd, r, Stage);
+                    /*else if (y == 356 && p.Equals(ground_pixel))
+                        SpawnEndPieceOrNormal(x, y, ground_pixel, GroundTiles, GroundTileEnd, r, Stage);*/
                     else if (p.Equals(ground_pixel))
                         SpawnEndPieceOrNormal(x, y, ground_pixel, AirTiles, AirTileEnd, r, Stage);
                     else if (p == yellow_pixel)
@@ -58,7 +60,7 @@ namespace Assets
                     else if (p == blue_pixel)
                         Spawn(BlueTile, x, y, false, -0.06f);
                     else if (p == orange_pixel)
-                        Spawn(OrangeTile, x, y, false, -0.06f);
+                        SpawnEndPieceOrNormal(x, y, orange_pixel, GroundTiles, GroundTileEnd, r, Stage);
                     else if (p == magenta_pixel)
                         Spawn(MagentaTile, x, y, false, -0.06f);
                 }
@@ -83,7 +85,7 @@ namespace Assets
 
             while (current_near_bg_x_pos < Stage.width*0.16f)
             {
-                var go = (GameObject)Instantiate(NearBackground, new Vector3(current_near_bg_x_pos, 1.2f, 1), Quaternion.identity);
+                var go = (GameObject)Instantiate(NearBackground, new Vector3(current_near_bg_x_pos, 1.2f, 6), Quaternion.identity);
                 go.isStatic = true;
                 current_near_bg_x_pos += near_bg_width;
             }
@@ -93,9 +95,19 @@ namespace Assets
 
             while (current_far_bg_x_pos < Stage.width * 0.16f)
             {
-                var go = (GameObject)Instantiate(FarBackground, new Vector3(current_far_bg_x_pos, 1.2f, 3), Quaternion.identity);
+                var go = (GameObject)Instantiate(FarBackground, new Vector3(current_far_bg_x_pos, 1.45f, 10), Quaternion.identity);
                 go.isStatic = true;
                 current_far_bg_x_pos += far_bg_width;
+            }
+
+            var nearest_bg_width = NearestBackgrounds[0].renderer.bounds.size.x;
+            var current_nearest_bg_x_pos = 0.0f;
+
+            while (current_nearest_bg_x_pos < Stage.width * 0.16f)
+            {
+                var go = (GameObject)Instantiate(NearestBackgrounds[random.Next() % NearestBackgrounds.Count()], new Vector3(current_nearest_bg_x_pos, 0.7f, 1), Quaternion.identity);
+                go.isStatic = true;
+                current_nearest_bg_x_pos += nearest_bg_width;
             }
         }
 

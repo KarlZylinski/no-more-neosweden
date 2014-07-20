@@ -10,7 +10,9 @@ namespace Assets.Player
         public Sprite[] HitSpritesBackhand;
         public Sprite[] RunSpritesForehand;
         public Sprite[] HitSpritesForehand;
-        
+        public Sprite[] FlySprite;
+        public bool KillWhenDone = false;
+
         public float AnimationSpeed = 1/10.0f;
         private float _current_time;
         private int _frame_index;
@@ -47,6 +49,12 @@ namespace Assets.Player
 
                 if (_frame_index >= animation.Count())
                 {
+                    if (KillWhenDone)
+                    {
+                        Destroy(gameObject);
+                        return;
+                    }
+
                     _frame_index = 0;
 
                     if (temp_anim)

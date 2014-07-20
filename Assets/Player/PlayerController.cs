@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Sockets;
 using UnityEngine;
 
@@ -19,6 +20,10 @@ namespace Assets.Player
         public float Facing { get; private set; }
         private Animator _animator;
         private bool _forehand = true;
+        private BeatMatcher _beat_matcher;
+        private int _lane_index;
+        private float _movement_y_last_frame;
+        private float _distance;
 
 
         // Public interface.
@@ -30,12 +35,17 @@ namespace Assets.Player
 
         public void ResetHorizontalVelocity()
         {
-            _horizontal_velocity = 1.0f;
+            _horizontal_velocity = 0.5f;
         }
 
         public void BoostHorizontalVelocity()
         {
-            _horizontal_velocity += 0.1f;
+            _horizontal_velocity += 0.015f;
+        }
+
+        public void DoubleHorizontalVelocity()
+        {
+            _horizontal_velocity *= 2;
         }
 
         public void FlipHand()
@@ -56,9 +66,18 @@ namespace Assets.Player
             _on_ground = false;
             ResetHorizontalVelocity();
             _animator = GetComponent<Animator>();
+            _beat_matcher = GameObject.Find("Music").GetComponent<BeatMatcher>();
+            _lane_index = 0;
+            _movement_y_last_frame = 0;
+            _distance = 0;
         }
 
-        public void Update()
+        public int DistanceTravelled()
+        {
+            return (int)_distance;
+        }
+
+        /*public void Update()
         {
             var movement_input = _input.GetMovementInput();
             Facing = Math.Abs(movement_input.x) < float.Epsilon
@@ -68,23 +87,47 @@ namespace Assets.Player
                     : -1;
 
             transform.localScale = new Vector3(Facing, 1, 1);
+        }*/
 
-            if (Mathf.Abs(rigidbody2D.velocity.x) < 0.2f && Mathf.Abs(_horizontal_velocity) >= 0.2f)
-                ResetHorizontalVelocity();
-        }
-
-        public void FixedUpdate()
+        public void Update()
         {
-            _on_ground = IsOnGround(transform.position, _collider, GroundLayerMask);
-            var input = _input.GetMovementInput();
+           // _on_ground = IsOnGround(transform.position, _collider, GroundLayerMask);
+           // var input = _input.GetMovementInput();
 
-            //_horizontal_velocity = CalculateHorizontalVelocity(_horizontal_velocity, input.x, MaxHorizontalVelocity, HorizontalAcceleration);
-            rigidbody2D.velocity = new Vector2(_horizontal_velocity, CalculateVerticalVelocity(rigidbody2D.velocity.y, transform.position, _collider, GroundLayerMask));
-            _on_ground = ApplyJump(_input.GetJump(), _on_ground, rigidbody2D, JumpForce, rigidbody2D.velocity.y);
-            if (Mathf.Abs(_horizontal_velocity) > float.Epsilon)
-                _animator.SetBaseAnimation(_forehand ? _animator.RunSpritesForehand : _animator.RunSpritesBackhand, _horizontal_velocity);
+           // _horizontal_velocity = CalculateHorizontalVelocity(_horizontal_velocity, input.x, MaxHorizontalVelocity, HorizontalAcceleration);
+            //rigidbody2D.velocity = new Vector2(_horizontal_velocity, CalculateVerticalVelocity(rigidbody2D.velocity.y, transform.position, _collider, GroundLayerMask));
+
+            var target_lane_dist = (_beat_matcher.Lanes[_lane_index]*0.16f + 0.04f) - transform.position.y;
+            transform.position += new Vector3(_horizontal_velocity, target_lane_dist * 5, 0) * Time.deltaTime;
+            _distance += _horizontal_velocity * Time.deltaTime;
+
+            if (Mathf.Abs(target_lane_dist) > 0.01f)
+                _animator.SetBaseAnimation(_animator.FlySprite, 1);
             else
-                _animator.SetBaseAnimation(_animator.IdleSprites, _horizontal_velocity);
+            {
+                _animator.SetBaseAnimation(_forehand ? _animator.RunSpritesForehand : _animator.RunSpritesBackhand, _horizontal_velocity);
+            }
+
+            var movement = _input.GetMovementInput();
+
+            if (movement.y > 0.7f && _movement_y_last_frame <= 0.7f)
+            {
+                _lane_index++;
+
+                if (_lane_index >= _beat_matcher.Lanes.Count())
+                    _lane_index = _beat_matcher.Lanes.Count() - 1;
+            }
+            else if (movement.y < -0.7f && _movement_y_last_frame >= -0.7f)
+            {
+                _lane_index--;
+
+                if (_lane_index < 0)
+                    _lane_index = 0;
+            }
+
+            _movement_y_last_frame = movement.y;
+
+            /*_on_ground = ApplyJump(_input.GetJump(), _on_ground, rigidbody2D, JumpForce, rigidbody2D.velocity.y);*/
         }
 
 
